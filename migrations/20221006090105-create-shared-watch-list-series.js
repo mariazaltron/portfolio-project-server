@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,7 +12,7 @@ module.exports = {
       serieId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "serie",
+          model: "series",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -21,7 +21,7 @@ module.exports = {
       sharedWatchListId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "sharedWatchList",
+          model: "sharedWatchLists",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -38,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('sharedWatchListSeries');
-  }
+    await queryInterface.dropTable("sharedWatchListSeries");
+  },
 };

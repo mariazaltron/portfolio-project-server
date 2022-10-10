@@ -1,21 +1,27 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("sharedWatchLists", {
+    await queryInterface.createTable("sharedWatchListUsers", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-      },
-      owner: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "user",
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      sharedWatchListId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "sharedWatchLists",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -32,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('sharedWatchLists');
-  }
+    await queryInterface.dropTable("sharedWatchListUsers");
+  },
 };

@@ -1,9 +1,12 @@
 //packages
 const express = require("express");
+//nodeenv
+require("dotenv").config();
 
 //routers
 // const authRouter = require("./routers/auth");
 const serieRouter = require("./routers/series");
+const sharedwatchlistRouter = require("./routers/sharedWatchLists");
 
 //constants
 const { PORT } = require("./config/constants");
@@ -15,13 +18,17 @@ const app = express();
 // we are are doing "Cross Origin Resource Sharing" (cors)
 // Cross origin resource sharing is disabled by express by default
 // app.use(corsMiddleWare());
+var cors = require("cors");
+
+app.use(cors());
 
 // express.json() to be able to read request bodies of JSON requests a.k.a. body-parser
 app.use(express.json());
 
 //routes
 // app.use("/auth", authRouter);
-app.use("/", serieRouter);
+app.use("/series", serieRouter);
+app.use("/watchlists", sharedwatchlistRouter);
 
 //start listening
 app.listen(PORT, () => {
