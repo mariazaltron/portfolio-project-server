@@ -9,14 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       sharedWatchList.belongsToMany(models.user, {
-        as: "sharedWatchListUsers",
         through: "sharedWatchListUsers",
-        foreignKey: "userId",
+        foreignKey: "sharedWatchListId",
       });
       sharedWatchList.belongsToMany(models.serie, {
-        as: "sharedWatchListSeries",
         through: "sharedWatchListSeries",
-        foreignKey: "serieId",
+        foreignKey: "sharedWatchListId",
       });
     }
   }

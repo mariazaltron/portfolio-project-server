@@ -4,7 +4,7 @@ const express = require("express");
 require("dotenv").config();
 
 //routers
-// const authRouter = require("./routers/auth");
+const authRouter = require("./routers/auth");
 const serieRouter = require("./routers/series");
 const sharedwatchlistRouter = require("./routers/sharedWatchLists");
 
@@ -26,7 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 //routes
-// app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 app.use("/series", serieRouter);
 app.use("/watchlists", sharedwatchlistRouter);
 
