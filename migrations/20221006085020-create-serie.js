@@ -2,42 +2,45 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('series', {
+    await queryInterface.createTable("series", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       genres: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       number_of_seasons: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       poster_path: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       networks: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       vote_average: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       overview: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+      },
+      tmdb_id: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

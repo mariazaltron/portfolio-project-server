@@ -4,6 +4,8 @@ const { toJWT, toData } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const User = require("../models/").user;
 const SharedWatchList = require("../models/").sharedWatchList;
+const SharedWatchListSerie = require("../models/").SharedWatchListSerie;
+const Serie = require("../models/").serie;
 const { SALT_ROUNDS } = require("../config/constants");
 
 const router = new Router();
@@ -58,15 +60,14 @@ router.post("/signup", async (req, res) => {
       owner: newUser.dataValues["id"],
       title: `${newUser.dataValues["name"]}'s lists`,
     });
-    98;
 
     delete newUser.dataValues["password"]; // don't send back the password hash
 
-    const token = toJWT({ owner : newUser.id });
+    const token = toJWT({ id : newUser.id });
 
     res
       .status(201)
-      .json({ token, owner: newUser.dataValues, sharedWatchList: newSharedWatchList.dataValues });
+      .json({ token, id: newUser.dataValues, sharedWatchList: newSharedWatchList.dataValues });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res
@@ -81,7 +82,7 @@ router.post("/signup", async (req, res) => {
 // The /me endpoint can be used to:
 // - get the users email & name using only their token
 // - checking if a token is (still) valid
-router.get("/me", authMiddleware, async (req, res) => {
+router.get("/mylists", authMiddleware, async (req, res) => {
   // don't send back the password hash
 
   const auth =
@@ -93,17 +94,17 @@ router.get("/me", authMiddleware, async (req, res) => {
     });
   }
   const data = toData(auth[1]);
-  const space = await Space.findOne({
-    where: { userId: data.userId },
-    include: { model: Story },
-    order: [[`stories`, `createdAt`, `DESC`]],
+  const sharedWatchList = await SharedWatchList.findAll({
+    where: { owner: data.userId },
+    include: { model: SharedWatchListSerie },
   });
-  console.log(space);
+
+  console.log("oie", sharedWatchList);
   const user = await User.findOne({ where: { id: data.userId } });
   delete user.dataValues["password"]; // don't send back the password hash
 
   const token = toJWT({ userId: user.id });
-  res.status(200).send({ token, user: user, space: space });
+  res.status(200).send({ token, user: user, sharedWatchList: sharedWatchList });
 });
 
 module.exports = router;

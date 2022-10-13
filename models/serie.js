@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       networks: DataTypes.STRING,
       vote_average: DataTypes.FLOAT,
       overview: DataTypes.TEXT,
+      tmdb_id: DataTypes.INTEGER,
     },
     {
       sequelize,

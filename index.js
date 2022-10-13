@@ -6,7 +6,7 @@ require("dotenv").config();
 //routers
 const authRouter = require("./routers/auth");
 const serieRouter = require("./routers/series");
-const sharedwatchlistRouter = require("./routers/sharedWatchLists");
+
 
 //constants
 const { PORT } = require("./config/constants");
@@ -28,7 +28,7 @@ app.use(express.json());
 //routes
 app.use("/auth", authRouter);
 app.use("/series", serieRouter);
-app.use("/watchlists", sharedwatchlistRouter);
+
 
 //start listening
 app.listen(PORT, () => {
