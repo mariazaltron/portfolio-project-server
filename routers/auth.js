@@ -24,7 +24,7 @@ router.post("/login", async (req, res, next) => {
     const user = await User.findOne({ where: { email: email } });
     const sharedWatchList = await SharedWatchList.findOne({
       where: { owner: user.id },
-
+      include: { model: Serie },
     });
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
@@ -35,7 +35,9 @@ router.post("/login", async (req, res, next) => {
 
     delete user.dataValues["password"]; // don't send back the password hash
     const token = toJWT({ owner: user.id });
-    return res.status(200).send({ token, user: user.dataValues, sharedWatchList: sharedWatchList });
+    return res
+      .status(200)
+      .send({ token, user: user.dataValues, sharedWatchList: sharedWatchList });
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong, sorry" });
@@ -63,11 +65,15 @@ router.post("/signup", async (req, res) => {
 
     delete newUser.dataValues["password"]; // don't send back the password hash
 
-    const token = toJWT({ id : newUser.id });
+    const token = toJWT({ id: newUser.id });
 
     res
       .status(201)
-      .json({ token, id: newUser.dataValues, sharedWatchList: newSharedWatchList.dataValues });
+      .json({
+        token,
+        id: newUser.dataValues,
+        sharedWatchList: newSharedWatchList.dataValues,
+      });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res
@@ -94,12 +100,11 @@ router.get("/mylists", authMiddleware, async (req, res) => {
     });
   }
   const data = toData(auth[1]);
-  const sharedWatchList = await SharedWatchList.findAll({
+  const sharedWatchList = await SharedWatchList.findOne({
     where: { owner: data.userId },
-    include: { model: SharedWatchListSerie },
+    include: SharedWatchListSerie,
   });
 
-  console.log("oie", sharedWatchList);
   const user = await User.findOne({ where: { id: data.userId } });
   delete user.dataValues["password"]; // don't send back the password hash
 
