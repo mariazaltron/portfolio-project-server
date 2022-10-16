@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       vote_average: DataTypes.FLOAT,
       overview: DataTypes.TEXT,
       tmdb_id: DataTypes.INTEGER,
+      backdrop_path: DataTypes.TEXT,
     },
     {
       sequelize,

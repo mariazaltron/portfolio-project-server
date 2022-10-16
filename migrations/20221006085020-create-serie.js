@@ -33,6 +33,9 @@ module.exports = {
       tmdb_id: {
         type: Sequelize.INTEGER,
       },
+      backdrop_path: {
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

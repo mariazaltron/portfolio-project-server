@@ -3,6 +3,7 @@ const { Router } = require("express");
 const Serie = require("../models").serie;
 const auth = require("../auth/middleware");
 const { movieDbImageUrl } = require("../config/constants");
+const sharedwatchlistseries = require("../models/sharedwatchlistseries");
 
 const router = new Router();
 
@@ -33,6 +34,7 @@ router.post("/", async (request, response, next) => {
         vote_average: serieToSave.vote_average,
         overview: serieToSave.overview,
         tmdb_id: serieToSave.id,
+        backdrop_path: movieDbImageUrl + serieToSave.backdrop_path,
       });
       response.send(serieCreated);
     } else {

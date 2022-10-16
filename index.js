@@ -6,6 +6,7 @@ require("dotenv").config();
 //routers
 const authRouter = require("./routers/auth");
 const serieRouter = require("./routers/series");
+const watchListsRouter = require("./routers/watchLists");
 
 
 //constants
@@ -28,6 +29,7 @@ app.use(express.json());
 //routes
 app.use("/auth", authRouter);
 app.use("/series", serieRouter);
+app.use("/watchlists", watchListsRouter);
 
 
 //start listening

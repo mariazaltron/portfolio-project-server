@@ -9,18 +9,21 @@ module.exports = {
         {
           serieId: 1,
           sharedWatchListId: 1,
+          status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           serieId: 2,
           sharedWatchListId: 2,
+          status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           serieId: 3,
           sharedWatchListId: 3,
+          status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

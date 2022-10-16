@@ -18,6 +18,11 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "watching",
+      },
       sharedWatchListId: {
         type: Sequelize.INTEGER,
         references: {

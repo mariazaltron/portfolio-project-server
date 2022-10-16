@@ -13,12 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  sharedWatchListSeries.init({
-    serieId: DataTypes.INTEGER,
-    sharedWatchListId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'sharedWatchListSeries',
-  });
+  sharedWatchListSeries.init(
+    {
+      serieId: DataTypes.INTEGER,
+      status: DataTypes.STRING,
+      sharedWatchListId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "sharedWatchListSeries",
+    }
+  );
   return sharedWatchListSeries;
 };

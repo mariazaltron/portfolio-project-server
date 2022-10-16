@@ -17,6 +17,8 @@ module.exports = {
           overview:
             "When Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family's financial future at any cost as he enters the dangerous world of drugs and crime.",
           tmdb_id: 1396,
+          backdrop_path:
+            "https://image.tmdb.org/t/p/original/84XPpjGvxNyExjSuLQe0SzioErt.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -31,6 +33,8 @@ module.exports = {
           overview:
             "Six years before Saul Goodman meets Walter White. We meet him when the man who will become Saul Goodman is known as Jimmy McGill, a small-time lawyer searching for his destiny, and, more immediately, hustling to make ends meet. Working alongside, and, often, against Jimmy, is “fixer” Mike Ehrmantraut. The series tracks Jimmy’s transformation into Saul Goodman, the man who puts “criminal” in criminal lawyer.",
           tmdb_id: 60059,
+          backdrop_path:
+            "https://image.tmdb.org/t/p/original/t15KHp3iNfHVQBNIaqUGW12xQA4.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -45,6 +49,8 @@ module.exports = {
           overview:
             "The everyday lives of office employees in the Scranton, Pennsylvania branch of the fictional Dunder Mifflin Paper Company.",
           tmdb_id: 2316,
+          backdrop_path:
+            "https://image.tmdb.org/t/p/original/uEaKtFrTCeBJFPlwESqzZ4QMYK1.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
