@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       genres: DataTypes.STRING,
       number_of_seasons: DataTypes.INTEGER,
       poster_path: DataTypes.TEXT,
-      networks: DataTypes.STRING,
       vote_average: DataTypes.FLOAT,
       overview: DataTypes.TEXT,
       tmdb_id: DataTypes.INTEGER,

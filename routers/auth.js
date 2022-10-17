@@ -67,13 +67,11 @@ router.post("/signup", async (req, res) => {
 
     const token = toJWT({ id: newUser.id });
 
-    res
-      .status(201)
-      .json({
-        token,
-        id: newUser.dataValues,
-        sharedWatchList: newSharedWatchList.dataValues,
-      });
+    res.status(201).json({
+      token,
+      id: newUser.dataValues,
+      sharedWatchList: newSharedWatchList.dataValues,
+    });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res
@@ -89,24 +87,15 @@ router.post("/signup", async (req, res) => {
 // - get the users email & name using only their token
 // - checking if a token is (still) valid
 router.get("/mylists", authMiddleware, async (req, res) => {
-  // don't send back the password hash
+  const userId = req.user.id;
 
-  const auth =
-    req.headers.authorization && req.headers.authorization.split(" ");
-  if (!auth || !(auth[0] === "Bearer") || !auth[1]) {
-    return res.status(401).send({
-      message:
-        "This endpoint requires an Authorization header with a valid token",
-    });
-  }
-  const data = toData(auth[1]);
-  const sharedWatchList = await SharedWatchList.findOne({
-    where: { owner: data.userId },
-    include: SharedWatchListSerie,
-  });
-
-  const user = await User.findOne({ where: { id: data.userId } });
+  const user = await User.findOne({ where: { id: userId } });
   delete user.dataValues["password"]; // don't send back the password hash
+
+  const sharedWatchList = await SharedWatchList.findOne({
+    where: { owner: user.id },
+    include: { model: Serie },
+  });
 
   const token = toJWT({ userId: user.id });
   res.status(200).send({ token, user: user, sharedWatchList: sharedWatchList });

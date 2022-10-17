@@ -21,9 +21,6 @@ module.exports = {
       poster_path: {
         type: Sequelize.TEXT,
       },
-      networks: {
-        type: Sequelize.STRING,
-      },
       vote_average: {
         type: Sequelize.FLOAT,
       },

@@ -7,19 +7,19 @@ module.exports = {
       "sharedWatchLists",
       [
         {
-          name: "",
+          name: "Ana's List",
           owner: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "",
+          name: "Tom's List",
           owner: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "",
+          name: "Julia's List",
           owner: 3,
           createdAt: new Date(),
           updatedAt: new Date(),
