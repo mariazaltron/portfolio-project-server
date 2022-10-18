@@ -8,13 +8,12 @@ const Serie = require("../models").serie;
 const router = new Router();
 
 // get all profiles
-router.get("/", async (request, response, next) => {
+router.get("/", auth, async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: { exclude: ["password"] },
     });
-    response.send(users);
-    
+    res.send({ users });
   } catch (e) {
     console.log(e.message);
     next(e);
