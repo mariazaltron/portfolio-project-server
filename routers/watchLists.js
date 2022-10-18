@@ -77,6 +77,27 @@ router.post("/:id/series/:serieId", auth, async (req, res) => {
   return res.status(200).send({ sharedWatchList });
 });
 
+router.delete("/:id/series/:serieId", auth, async (req, res, next) => {
+  try {
+     const watchList = await SharedWatchListSeries.findOne({
+       where: {
+         sharedWatchListId: req.params.id,
+         serieId: req.params.serieId,
+       },
+     });
+     if (watchList === null) {
+       return res.status(404).send({ message: "WatchList not found" });
+     }
+
+    await watchList.destroy();
+
+    res.send({ message: "ok", id });
+  } catch (e) {
+    next(e);
+  }
+});
+
+
 router.post("/:id/users/:userId", auth, async (req, res) => {
   const serieInDB = await Serie.findByPk(req.params.serieId);
   if (serieInDB === null) {
