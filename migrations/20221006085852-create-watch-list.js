@@ -2,31 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("sharedWatchListSeries", {
+    await queryInterface.createTable("watchLists", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      serieId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "series",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      status: {
-        allowNull: false,
+      name: {
         type: Sequelize.STRING,
-        defaultValue: "watching",
       },
-      sharedWatchListId: {
+      owner: {
         type: Sequelize.INTEGER,
         references: {
-          model: "sharedWatchLists",
+          model: "users",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -43,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("sharedWatchListSeries");
+    await queryInterface.dropTable("watchLists");
   },
 };

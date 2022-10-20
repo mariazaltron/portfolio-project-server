@@ -3,8 +3,8 @@ const { Router } = require("express");
 const { toJWT, toData } = require("../auth/jwt");
 const authMiddleware = require("../auth/middleware");
 const User = require("../models/").user;
-const SharedWatchList = require("../models/").sharedWatchList;
-const SharedWatchListSerie = require("../models/").SharedWatchListSerie;
+const WatchList = require("../models/").watchList;
+// const SharedWatchListSerie = require("../models/").SharedWatchListSerie;
 const Serie = require("../models/").serie;
 const { SALT_ROUNDS } = require("../config/constants");
 
@@ -22,7 +22,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const user = await User.findOne({ where: { email: email } });
-    const sharedWatchList = await SharedWatchList.findOne({
+    const sharedWatchList = await WatchList.findOne({
       where: { owner: user.id },
       include: { model: Serie },
     });
@@ -34,7 +34,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     delete user.dataValues["password"]; // don't send back the password hash
-    const token = toJWT({ owner: user.id });
+    const token = toJWT({ userId: user.id });
     return res
       .status(200)
       .send({ token, user: user.dataValues, sharedWatchList: sharedWatchList });
@@ -58,18 +58,18 @@ router.post("/signup", async (req, res) => {
       name,
     });
 
-    const newSharedWatchList = await SharedWatchList.create({
+    const newSharedWatchList = await WatchList.create({
       owner: newUser.dataValues["id"],
-      title: `${newUser.dataValues["name"]}'s lists`,
+      name: `${newUser.dataValues["name"]}'s lists`,
     });
 
     delete newUser.dataValues["password"]; // don't send back the password hash
 
-    const token = toJWT({ id: newUser.id });
+    const token = toJWT({ userId: newUser.id });
 
     res.status(201).json({
       token,
-      id: newUser.dataValues,
+      user: newUser.dataValues,
       sharedWatchList: newSharedWatchList.dataValues,
     });
   } catch (error) {
@@ -92,13 +92,16 @@ router.get("/mylists", authMiddleware, async (req, res) => {
   const user = await User.findOne({ where: { id: userId } });
   delete user.dataValues["password"]; // don't send back the password hash
 
-  const sharedWatchList = await SharedWatchList.findOne({
+  const sharedWatchList = await WatchList.findOne({
     where: { owner: user.id },
     include: { model: Serie },
   });
 
   const token = toJWT({ userId: user.id });
-  res.status(200).send({ token, user: user, sharedWatchList: sharedWatchList });
+
+  res
+    .status(200)
+    .send({ token, user: user.dataValues, sharedWatchList: sharedWatchList });
 });
 
 module.exports = router;

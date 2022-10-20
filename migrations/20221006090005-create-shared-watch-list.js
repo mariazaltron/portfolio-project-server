@@ -9,13 +9,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-      },
-      owner: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      watchListId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "watchLists",
           key: "id",
         },
         onUpdate: "CASCADE",

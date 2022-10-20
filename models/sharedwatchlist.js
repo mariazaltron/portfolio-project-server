@@ -8,20 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      sharedWatchList.belongsToMany(models.user, {
-        through: "sharedWatchListUsers",
-        foreignKey: "sharedWatchListId",
-      });
-      sharedWatchList.belongsToMany(models.serie, {
-        through: "sharedWatchListSeries",
-        foreignKey: "sharedWatchListId",
-      });
+      // define association here
     }
   }
   sharedWatchList.init(
     {
-      name: DataTypes.STRING,
-      owner: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
+      watchListId: DataTypes.INTEGER,
     },
     {
       sequelize,

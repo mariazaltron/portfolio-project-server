@@ -3,7 +3,7 @@ const { Router } = require("express");
 const Serie = require("../models").serie;
 const auth = require("../auth/middleware");
 const { movieDbImageUrl } = require("../config/constants");
-const sharedwatchlistseries = require("../models/sharedwatchlistseries");
+// const sharedwatchlistseries = require("../models/sharedwatchlistseries");
 
 const router = new Router();
 
@@ -20,6 +20,7 @@ router.get("/:id", async (request, response, next) => {
 
 router.post("/", async (request, response, next) => {
   try {
+    console.log("HERE IN POST");
     const serieToSave = request.body;
     console.log(request.body);
     const serieFound = await Serie.findOne({
@@ -28,8 +29,6 @@ router.post("/", async (request, response, next) => {
     if (serieFound === null) {
       const serieCreated = await Serie.create({
         name: serieToSave.name,
-        genres: serieToSave.genres[0].name || null,
-        number_of_seasons: serieToSave.number_of_seasons,
         poster_path: movieDbImageUrl + serieToSave.poster_path,
         vote_average: serieToSave.vote_average,
         overview: serieToSave.overview,
@@ -41,6 +40,7 @@ router.post("/", async (request, response, next) => {
       response.send(serieFound);
     }
   } catch (e) {
+    console.log(e);
     next(e);
   }
 });

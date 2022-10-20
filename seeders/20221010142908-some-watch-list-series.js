@@ -1,28 +1,28 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      "sharedWatchListSeries",
+      "watchListSeries",
       [
         {
           serieId: 1,
-          sharedWatchListId: 1,
+          watchListId: 1,
           status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           serieId: 2,
-          sharedWatchListId: 2,
+          watchListId: 2,
           status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           serieId: 3,
-          sharedWatchListId: 3,
+          watchListId: 3,
           status: "watching",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -32,8 +32,7 @@ module.exports = {
     );
   },
 
-  async down (queryInterface, Sequelize) {
-       await queryInterface.bulkDelete("sharedWatchListSeries", null, {});
-
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("watchListSeries", null, {});
+  },
 };
