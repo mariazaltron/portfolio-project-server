@@ -81,8 +81,7 @@ router.patch("/:id/series/:serieId", async (req, res, next) => {
 });
 
 router.post("/:id/series", auth, async (req, res) => {
-  const serieToSave = req.body.serie;
-  console.log(serieToSave);
+  const serieToSave = req.body;
   const serieFound = await Serie.findOne({
     where: { tmdb_id: serieToSave.id },
   });
@@ -98,15 +97,16 @@ router.post("/:id/series", auth, async (req, res) => {
         })
       : serieFound;
 
-  const sharedWathListSeries = await WatchListSeries.create({
+  const sharedWatchListSeries = await WatchListSeries.create({
     serieId: serieCreated.id,
-    status: req.body.status,
+    status: "watching",
     watchListId: req.params.id,
   });
-  const sharedWatchList = await WatchList.findByPk(req.params.id, {
-    include: { model: Serie },
+  const sharedWatchList = await WatchList.findOne({
+      where: { owner: req.user.id },
+      include: { model: Serie },
   });
-  return res.status(200).send({ sharedWatchList });
+  return res.status(200).send(sharedWatchList);
 });
 
 router.delete("/:id/series/:serieId", auth, async (req, res, next) => {
