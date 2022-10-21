@@ -102,8 +102,7 @@ router.post("/:id/series", auth, async (req, res) => {
     status: "watching",
     watchListId: req.params.id,
   });
-  const sharedWatchList = await WatchList.findOne({
-      where: { owner: req.user.id },
+  const sharedWatchList = await WatchList.findByPk(req.params.id, {
       include: { model: Serie },
   });
   return res.status(200).send(sharedWatchList);
